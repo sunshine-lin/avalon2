@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo1</title>
+	<script type="text/javascript" src="./avalon.js"></script>
+	<script>
+       var vm = avalon.define({
+       	// 挂载
+           $id: "test",
+           // 定义数据
+           name: "司徒正美",
+           age: 44,
+           showAge: false,
+           array: [11,22,33],
+           firstName: "zhang",
+           lastName: 'san',
+           aaa: {
+           	a: 1,
+           	b: 2
+           },
+           // 计算属性
+           $computed: {
+                   //fullName依赖于firstName与lastName
+                   fullName: function(){
+                       return this.age + 5
+                   }
+               },	
+            $watch: {
+            	aaa: function observe(newVal, oldVal, node) {
+		           // expect(a).to.be(6)
+		           // expect(b).to.be(2)
+		           console.log("newVal",newVal)
+		       },
+		       handleClick () {
+		       	this.name = '李四'
+		       }
+		     }
+       })
+       // wath 监听
+      
+       // 数组操作
+       vm.array.pushArray([44,55,66,77]);
+       // vm.array.clear(); // 全部删除 
+       // vm.array.removeAll() // 不带参数 跟clear一样
+       vm.array.remove(66);
+       vm.array.removeAt(0);
+       vm.array.ensure(88); // 只有当元素不存在时 才添加 
+       vm.array.set(0, 111);  // splice(index,1,value) 替换
+       // let obj = vm.array.toJSON()  // toJSON()， 用于取得数组的$model, 2.2.2新添加的方法
+       setTimeout(function () {
+       		vm.aaa.a = 3
+       },3000)
+   </script>
+</head>
+<body ms-controller="test">
+    <input ms-duplex="@name">
+    <div>{{!@showAge? @age + 10: 10}}</div>
+    <p ms-on-click="@handleClick">Hello,{{@name}}!</p>
+    <div>{{@firstName | uppercase}}</div>
+    <div><span>{{@aaa.a}}</span> - <span>{{@aaa.b}}</span></div>
+    <ul>
+       <li ms-for="(index,item) in @array">{{index}}--{{item}}</li>
+    </ul>
+</body>
+</html>

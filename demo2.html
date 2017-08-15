@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo1</title>
+	<script type="text/javascript" src="./avalon.js"></script>
+
+</head>
+<body>
+   <div ms-controller="container">
+      <div class="title">{{@title}}</div>
+  
+   </div>
+     
+</body>
+<script>
+     var vm = avalon.define({
+      // 挂载
+         $id: "container",
+         title: 'avalon标题'
+        })
+ </script>
+</html>
